@@ -1,6 +1,7 @@
 package com.appswaves.controllers;
 
 import com.appswaves.dto.NewsDto;
+import com.appswaves.dto.NewsUserDto;
 import com.appswaves.service.NewsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ public class NewsController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<NewsDto> readNewsById(@RequestParam Long newsId) {
+    public ResponseEntity<NewsUserDto> readNewsById(@RequestParam Long newsId) {
         return new ResponseEntity<>(newsService.readNews(newsId), HttpStatus.OK);
     }
 
     @GetMapping("/read-all")
-    public ResponseEntity<List<NewsDto>> readAllNews() {
+    public ResponseEntity<List<NewsUserDto>> readAllNews() {
         return new ResponseEntity<>(newsService.readAllNews(), HttpStatus.OK);
     }
     @PutMapping("/update")

@@ -1,6 +1,7 @@
 package com.appswaves.entity;
 
 import com.appswaves.enums.NewsStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +35,6 @@ public class NewsEntity {
     private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id",nullable = true)
+    @JsonIgnore
     private NewsStatusEntity newsStatusEntity;
 }

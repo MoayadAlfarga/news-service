@@ -29,7 +29,7 @@ public class NewsStatusEntity {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @OneToOne
-    @JoinColumn(name = "id", nullable = true)
-    private NewsEntity newsEntity;
+//    @OneToOne
+//    @JoinColumn(name = "id", nullable = true)
+//    private NewsEntity newsEntity;
 }

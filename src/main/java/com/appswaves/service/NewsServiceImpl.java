@@ -1,6 +1,7 @@
 package com.appswaves.service;
 
 import com.appswaves.dto.NewsDto;
+import com.appswaves.dto.NewsUserDto;
 import com.appswaves.entity.NewsEntity;
 import com.appswaves.entity.NewsStatusEntity;
 import com.appswaves.enums.NewsStatus;
@@ -26,7 +27,7 @@ public class NewsServiceImpl implements NewsService {
     private NewsStatusRepository newsStatusRepository;
 
     private void saveStatus(NewsStatusEntity statusEntity) throws NewsNotFoundException {
-            newsStatusRepository.save(statusEntity);
+        newsStatusRepository.save(statusEntity);
     }
 
 
@@ -55,9 +56,9 @@ public class NewsServiceImpl implements NewsService {
     private void setStatusNewsAndSavePublish(NewsEntity newsEntity) {
         NewsStatusEntity newsStatusEntity = new NewsStatusEntity();
         newsStatusEntity.setNewsStatus(NewsStatus.PENDING);
-        newsStatusEntity.setNewsEntity(newsEntity);
         newsEntity.setPublishDate(LocalDateTime.now());
         newsEntity.setNewsStatusEntity(newsStatusEntity);
+        saveStatus(newsStatusEntity);
     }
 
     public Optional<NewsEntity> findNewsById(Long newsId) {
@@ -69,10 +70,22 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDto readNews(Long newsId) {
+    public NewsUserDto readNews(Long newsId) {
         NewsEntity newsEntity = this.findNewsById(newsId).orElseThrow();
-        return mapToNewsDto(newsEntity);
+        return buildReadNewsInformation(newsEntity);
     }
+
+
+    public NewsUserDto buildReadNewsInformation(NewsEntity newsEntity) {
+        return NewsUserDto.builder()
+                .titleArabic(newsEntity.getTitleArabic())
+                .titleEnglish(newsEntity.getTitleEnglish())
+                .descriptionArabic(newsEntity.getDescriptionArabic())
+                .descriptionEnglish(newsEntity.getDescriptionEnglish())
+                .publishDate(newsEntity.getPublishDate())
+                .build();
+    }
+
 
     public void buildUpdateNewsInformation(NewsDto newsDto, NewsEntity newsEntity, NewsStatusEntity newsStatus) {
         newsEntity.setTitleEnglish(newsDto.getTitleEnglish());
@@ -102,9 +115,9 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<NewsDto> readAllNews() {
+    public List<NewsUserDto> readAllNews() {
         return newsRepository.findAll().stream()
-                .map(r -> objectMapper.convertValue(r, NewsDto.class))
+                .map(r -> objectMapper.convertValue(r, NewsUserDto.class))
                 .collect(Collectors.toList());
     }
 }
