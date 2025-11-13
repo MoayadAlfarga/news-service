@@ -5,7 +5,9 @@ import com.appswaves.dto.LoginRequestDto;
 import com.appswaves.dto.RegistrationUserDto;
 import com.appswaves.entity.UserEntity;
 import com.appswaves.enums.Role;
+import com.appswaves.exceptions.AlreadyExistsException;
 import com.appswaves.repository.UserRepository;
+import com.appswaves.security.JwtGenerationToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,9 +27,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AuthenticationResponse registrationAdminUser(RegistrationUserDto registrationUserDto) {
         if (userRepository.existsByEmail(registrationUserDto.getEmail())) {
-//            throw new AlreadyExists("User Account Bank  Is Already Exists !! :" + registrationUserDto.getEmail());
-            throw new RuntimeException("User Account Bank  Is Already Exists !! :" + registrationUserDto.getEmail());
-            /////  exception  Admin
+            throw new AlreadyExistsException();
         }
         UserEntity user = UserEntity.builder()
                 .fullName(registrationUserDto.getFullName())
@@ -40,7 +40,6 @@ public class AdminServiceImpl implements AdminService {
         String jwtToken = jwtGenerationToken.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken).build();
-        ///  add  exception
     }
 
     @Override

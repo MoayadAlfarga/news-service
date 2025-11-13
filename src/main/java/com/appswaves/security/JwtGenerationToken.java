@@ -1,4 +1,4 @@
-package com.appswaves.service;
+package com.appswaves.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

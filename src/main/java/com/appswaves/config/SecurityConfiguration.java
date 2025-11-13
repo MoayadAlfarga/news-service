@@ -1,6 +1,6 @@
 package com.appswaves.config;
 
-import com.appswaves.service.JwtAuthenticationFilter;
+import com.appswaves.security.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

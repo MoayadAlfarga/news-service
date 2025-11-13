@@ -9,7 +9,7 @@ public interface AdminService {
 
     AuthenticationResponse registrationAdminUser(RegistrationUserDto registrationUserDto);
 
-        AuthenticationResponse loginAdminUser(LoginRequestDto loginRequestDto);
+    AuthenticationResponse loginAdminUser(LoginRequestDto loginRequestDto);
 
 
 }
