@@ -1,11 +1,14 @@
 package com.appswaves.controllers;
 
 import com.appswaves.dto.NewsDto;
+import com.appswaves.dto.NewsUserDto;
 import com.appswaves.service.NewsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/news")
@@ -19,22 +22,16 @@ public class NewsController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<NewsDto> addNewsEntity(@RequestParam Long newsId) {
+    public ResponseEntity<NewsUserDto> readNewsById(@RequestParam Long newsId) {
         return new ResponseEntity<>(newsService.readNews(newsId), HttpStatus.OK);
     }
 
-//    @GetMapping("/read-title")
-//    public ResponseEntity<NewsDto> addNewsEntity(@RequestParam Long newsId) {
-//        return new ResponseEntity<>(newsService.readNews(newsId), HttpStatus.OK);
-//    }
-
-    //    @GetMapping("/read-title-arabic")
-//    public ResponseEntity<NewsDto> addNewsEntity(@RequestParam Long newsId) {
-//        return new ResponseEntity<>(newsService.readNews(newsId), HttpStatus.OK);
-//    }
-
+    @GetMapping("/read-all")
+    public ResponseEntity<List<NewsUserDto>> readAllNews() {
+        return new ResponseEntity<>(newsService.readAllNews(), HttpStatus.OK);
+    }
     @PutMapping("/update")
-    public ResponseEntity<NewsDto> addNewsEntity(@RequestParam Long newsId, @RequestBody NewsDto newsDto) {
+    public ResponseEntity<NewsDto> updateStatusAndInformationNews(@RequestParam Long newsId, @RequestBody NewsDto newsDto) {
         return new ResponseEntity<>(newsService.updateNews(newsId, newsDto), HttpStatus.OK);
     }
 }

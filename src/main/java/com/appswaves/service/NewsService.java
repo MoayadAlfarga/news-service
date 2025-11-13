@@ -1,16 +1,20 @@
 package com.appswaves.service;
 
 import com.appswaves.dto.NewsDto;
+import com.appswaves.dto.NewsUserDto;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface NewsService {
 
-    public NewsDto addNews(NewsDto newsDto);
+     NewsDto addNews(NewsDto newsDto);
 
-    public NewsDto readNews(Long newsId) ;
+     List<NewsUserDto> readAllNews();
 
-    public NewsDto updateNews(Long newsId, NewsDto newsDto);
+     NewsUserDto readNews(Long newsId);
+
+     NewsDto updateNews(Long newsId, NewsDto newsDto);
 
 
 }

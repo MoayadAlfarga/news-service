@@ -1,7 +1,6 @@
 package com.appswaves.entity;
 
 import com.appswaves.enums.NewsStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,29 +11,25 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
-@Table(name = "news_information")
+@Table(name = "news_status")
 @Builder
-public class NewsEntity {
-    @Id
+public class NewsStatusEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String titleEnglish;
-    private String titleArabic;
-    private String descriptionEnglish;
-    private String descriptionArabic;
-    private String imageUrl;
-    private LocalDateTime publishDate;
+    @Id
+    @Column(name = "status_id")
+    private Long statusId;
+    @Enumerated(EnumType.STRING)
+    private NewsStatus newsStatus;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id",nullable = true)
-    @JsonIgnore
-    private NewsStatusEntity newsStatusEntity;
+//    @OneToOne
+//    @JoinColumn(name = "id", nullable = true)
+//    private NewsEntity newsEntity;
 }
