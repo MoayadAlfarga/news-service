@@ -11,5 +11,5 @@ public class RegistrationUserDto {
     private String fullName;
     private String email;
     private String password;
-    private String DateOfBirthDate;
+    private String dateOfBirthDate;
 }
