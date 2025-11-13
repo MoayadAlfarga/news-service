@@ -3,7 +3,6 @@ package com.appswaves.controllers;
 import com.appswaves.dto.AuthenticationResponse;
 import com.appswaves.dto.LoginRequestDto;
 import com.appswaves.dto.RegistrationUserDto;
-import com.appswaves.service.AdminService;
 import com.appswaves.service.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

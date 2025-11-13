@@ -6,6 +6,7 @@ import com.appswaves.dto.RegistrationUserDto;
 import com.appswaves.entity.UserEntity;
 import com.appswaves.enums.Role;
 import com.appswaves.exceptions.AlreadyExistsException;
+import com.appswaves.exceptions.UsernameNotFoundException;
 import com.appswaves.repository.UserRepository;
 import com.appswaves.security.JwtGenerationToken;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class SecurityUserService implements UsersService {
     public void saveUser(UserEntity user) {
         userRepository.save(user);
     }
+
     private AuthenticationResponse registrationProcessWithRole(RegistrationUserDto registrationUserDto, Role role) {
         this.checkIfUserExists(registrationUserDto);
         UserEntity user = buildUserInformation(registrationUserDto, role);
@@ -46,6 +48,7 @@ public class SecurityUserService implements UsersService {
     }
 
     private AuthenticationResponse loginProcess(LoginRequestDto loginRequestDto) {
+        checkIdUserNotFound(loginRequestDto);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(),
                 loginRequestDto.getPassword()));
         var user = userRepository.findByEmail(loginRequestDto.getEmail()).orElseThrow();
@@ -53,11 +56,18 @@ public class SecurityUserService implements UsersService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    private void checkIdUserNotFound(LoginRequestDto loginRequestDto) {
+        if (!userRepository.existsByEmail(loginRequestDto.getEmail())) {
+            throw new UsernameNotFoundException();
+        }
+    }
+
     private void checkIfUserExists(RegistrationUserDto registrationUserDto) {
         if (userRepository.existsByEmail(registrationUserDto.getEmail())) {
             throw new AlreadyExistsException();
         }
     }
+
     @Override
     public AuthenticationResponse registrationUser(RegistrationUserDto registrationUserDto) {
         checkIfUserExists(registrationUserDto);
@@ -78,16 +88,19 @@ public class SecurityUserService implements UsersService {
 
     @Override
     public AuthenticationResponse loginAdminUser(LoginRequestDto loginRequestDto) {
+        checkIdUserNotFound(loginRequestDto);
         return this.loginProcess(loginRequestDto);
     }
 
     @Override
     public AuthenticationResponse loginContentWriterUser(LoginRequestDto loginRequestDto) {
+        checkIdUserNotFound(loginRequestDto);
         return this.loginAdminUser(loginRequestDto);
     }
 
     @Override
     public AuthenticationResponse loginUser(LoginRequestDto loginRequestDto) {
+        checkIdUserNotFound(loginRequestDto);
         return loginProcess(loginRequestDto);
     }
 }
