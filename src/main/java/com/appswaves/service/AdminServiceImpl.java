@@ -24,22 +24,30 @@ public class AdminServiceImpl implements AdminService {
     private AuthenticationManager authenticationManager;
     private JwtGenerationToken jwtGenerationToken;
 
-    @Override
-    public AuthenticationResponse registrationAdminUser(RegistrationUserDto registrationUserDto) {
-        if (userRepository.existsByEmail(registrationUserDto.getEmail())) {
-            throw new AlreadyExistsException();
-        }
-        UserEntity user = UserEntity.builder()
+    private UserEntity buildAdminInformation(RegistrationUserDto registrationUserDto) {
+        return UserEntity.builder()
                 .fullName(registrationUserDto.getFullName())
                 .email(registrationUserDto.getEmail())
                 .DateOfBirthDate(registrationUserDto.getDateOfBirthDate())
                 .password(passwordEncoder.encode(registrationUserDto.getPassword()))
                 .role(Role.ADMIN)
                 .build();
+    }
+
+    @Override
+    public AuthenticationResponse registrationAdminUser(RegistrationUserDto registrationUserDto) {
+        checkIfUserAdminExists(registrationUserDto);
+        UserEntity user = buildAdminInformation(registrationUserDto);
         userRepository.save(user);
         String jwtToken = jwtGenerationToken.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken).build();
+    }
+
+    private void checkIfUserAdminExists(RegistrationUserDto registrationUserDto) {
+        if (userRepository.existsByEmail(registrationUserDto.getEmail())) {
+            throw new AlreadyExistsException();
+        }
     }
 
     @Override

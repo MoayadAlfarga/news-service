@@ -29,4 +29,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(buildErrorResponse(e.getArabicMessage(), e.getEnglishMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDto> handlingAlreadyExistsException(UnexpectedErrorException e) {
+        return new ResponseEntity<>(buildErrorResponse(e.getArabicMessage(), e.getEnglishMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

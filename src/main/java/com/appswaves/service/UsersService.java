@@ -8,4 +8,14 @@ public interface UsersService {
     AuthenticationResponse registrationUser(RegistrationUserDto registrationUserDto);
 
     AuthenticationResponse loginUser(LoginRequestDto loginRequestDto);
+
+    AuthenticationResponse registrationAdminUser(RegistrationUserDto registrationUserDto);
+
+    AuthenticationResponse loginAdminUser(LoginRequestDto loginRequestDto);
+
+    AuthenticationResponse registrationContentWriterUser(RegistrationUserDto registrationUserDto);
+
+    AuthenticationResponse loginContentWriterUser(LoginRequestDto loginRequestDto);
+
+
 }

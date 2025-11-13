@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/content")
 @AllArgsConstructor
-public class UserController {
+public class ContentWriterController {
     private UsersService usersService;
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> registrationUser(@RequestBody RegistrationUserDto registerUserDto) {
-        return ResponseEntity.ok(usersService.registrationUser(registerUserDto));
+
+    @PostMapping("/writer-register")
+    public ResponseEntity<AuthenticationResponse> registrationContentWriterUser(@RequestBody RegistrationUserDto registerAdminDto) {
+        return ResponseEntity.ok(usersService.registrationContentWriterUser(registerAdminDto));
     }
-    @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
-        return ResponseEntity.ok(usersService.loginUser(loginRequestDto));
+
+    @PostMapping("/writer-login")
+    public ResponseEntity<AuthenticationResponse> loginContentWriterUser(@RequestBody LoginRequestDto authenticationRequest) {
+        return ResponseEntity.ok(usersService.loginContentWriterUser(authenticationRequest));
     }
 }
