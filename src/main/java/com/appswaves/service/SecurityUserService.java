@@ -83,7 +83,8 @@ public class SecurityUserService implements UsersService {
     @Override
     public AuthenticationResponse registrationContentWriterUser(RegistrationUserDto registrationUserDto) {
         checkIfUserExists(registrationUserDto);
-        return this.registrationProcessWithRole(registrationUserDto, Role.CONTENT_WRITER);
+        return this.registrationProcessWithRole(registrationUserDto, Role.CONTENT_WRITER
+        );
     }
 
     @Override
