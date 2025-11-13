@@ -1,7 +1,12 @@
 package com.appswaves.enums;
 
-public enum Role {
-    USER,
-    ADMIN
+import lombok.Data;
 
+
+public enum Role {
+    NORMAL_USER,
+    USER,
+    ADMIN,
+    CONTENT_WRITER,
+    CONTENT
 }

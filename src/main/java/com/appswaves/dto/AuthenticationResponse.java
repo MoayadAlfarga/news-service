@@ -1,15 +1,15 @@
 package com.appswaves.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SignupDto {
-    private String fullName;
-    private String email;
-    private String password;
-    private String DateOfBirthDate;
+@Builder
+public class AuthenticationResponse {
+    private String token;
+
 }

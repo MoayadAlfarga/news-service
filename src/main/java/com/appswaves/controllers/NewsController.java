@@ -17,12 +17,12 @@ public class NewsController {
     private NewsService newsService;
 
     @PostMapping("/add")
-    public ResponseEntity<NewsDto> addNewsEntity(@RequestBody NewsDto newsDto) {
+    public ResponseEntity<NewsDto> addNews(@RequestBody NewsDto newsDto) {
         return new ResponseEntity<>(newsService.addNews(newsDto), HttpStatus.OK);
     }
 
     @GetMapping("/read")
-    public ResponseEntity<NewsUserDto> readNewsById(@RequestParam Long newsId) {
+    public ResponseEntity<NewsUserDto> readNews(@RequestParam Long newsId) {
         return new ResponseEntity<>(newsService.readNews(newsId), HttpStatus.OK);
     }
 
