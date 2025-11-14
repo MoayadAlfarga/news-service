@@ -33,7 +33,6 @@ public class SecurityConfiguration {
                                         "/users/login",
                                         "/content/writer-register",
                                         "/content/writer-login",
-                                        "/admin/register",
                                         "/admin/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/news/read", "/news/read-all")
                         .hasAnyAuthority("USER", "CONTENT_WRITER", "ADMIN")
