@@ -4,6 +4,7 @@ import com.appswaves.dto.AuthenticationResponse;
 import com.appswaves.dto.LoginRequestDto;
 import com.appswaves.dto.RegistrationUserDto;
 import com.appswaves.service.UsersService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private UsersService usersService;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> registrationUser(@RequestBody RegistrationUserDto registerUserDto) {
+    public ResponseEntity<AuthenticationResponse> registrationUser(@Valid  @RequestBody RegistrationUserDto registerUserDto) {
         return ResponseEntity.ok(usersService.registrationUser(registerUserDto));
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<AuthenticationResponse> loginUser( @Valid @RequestBody LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(usersService.loginUser(loginRequestDto));
     }
 }

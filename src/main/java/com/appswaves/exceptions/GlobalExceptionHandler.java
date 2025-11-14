@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(buildErrorResponse(e.getArabicMessage(), e.getEnglishMessage()), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST) // Sets the HTTP status to 400
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // Sets the HTTP status to 400
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
