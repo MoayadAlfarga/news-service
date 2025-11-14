@@ -14,10 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
 @Service
 public class JwtGenerationToken {
     @Value("${secret-key}")
-    private String  secretKey;
+    private String secretKey;
 
 
     public String extractUsername(String token) {
@@ -41,20 +42,10 @@ public class JwtGenerationToken {
         return Jwts.builder().setClaims(extractClaim).setSubject(userDetails.getUsername())
 
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-//    private String generateToken(Map<String, Object> extractClaim, UserDetails userDetails) {
-//        return Jwts.builder().setClaims(extractClaim).setSubject(userDetails.getUsername())
-//
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-//                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-//                .compact();
-//    }
-
     private Key getSignInKey() {
         byte[] bytesKey = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(bytesKey);
@@ -76,7 +67,6 @@ public class JwtGenerationToken {
 
         return extractExpiration(token).before(new Date());
     }
-
 
 
 }
