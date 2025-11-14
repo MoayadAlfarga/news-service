@@ -1,5 +1,6 @@
 package com.appswaves.service;
 
+import com.appswaves.dto.NewsAdminDto;
 import com.appswaves.dto.NewsDto;
 import com.appswaves.dto.NewsUserDto;
 
@@ -8,13 +9,15 @@ import java.util.Optional;
 
 public interface NewsService {
 
-     NewsDto addNews(NewsDto newsDto);
+    NewsDto addNews(NewsDto newsDto);
 
-     List<NewsUserDto> readAllNews();
+    List<NewsUserDto> readAllNews();
 
-     NewsUserDto readNews(Long newsId);
+    NewsUserDto readNews(Long newsId);
+    NewsAdminDto readNewsAdmin(Long newsId);
 
-     NewsDto updateNews(Long newsId, NewsDto newsDto);
+    NewsDto updateNews(Long newsId, NewsDto newsDto);
 
+    String deleteNews(Long newsId);
 
 }

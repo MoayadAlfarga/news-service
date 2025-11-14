@@ -5,15 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
+@Data
 @Builder
-public class NewsDto {
+public class NewsAdminDto {
+    private Long id;
     private String titleEnglish;
     private String titleArabic;
     private String descriptionEnglish;
     private String descriptionArabic;
     private String imageUrl;
-    private String publishDate;
+    private LocalDateTime publishDate;
 }

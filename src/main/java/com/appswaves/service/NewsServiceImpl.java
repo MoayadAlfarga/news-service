@@ -1,10 +1,12 @@
 package com.appswaves.service;
 
+import com.appswaves.dto.NewsAdminDto;
 import com.appswaves.dto.NewsDto;
 import com.appswaves.dto.NewsUserDto;
 import com.appswaves.entity.NewsEntity;
 import com.appswaves.entity.NewsStatusEntity;
 import com.appswaves.enums.NewsStatus;
+import com.appswaves.exceptions.DataRequiredException;
 import com.appswaves.exceptions.NewsNotFoundException;
 import com.appswaves.repository.NewsRepository;
 import com.appswaves.repository.NewsStatusRepository;
@@ -75,6 +77,25 @@ public class NewsServiceImpl implements NewsService {
         return buildReadNewsInformation(newsEntity);
     }
 
+    @Override
+    public NewsAdminDto readNewsAdmin(Long newsId) {
+        checkIfNullOrEmpty(newsId);
+        NewsEntity newsEntity = this.findNewsById(newsId).orElseThrow();
+        return buildReadAdminNewsInformation(newsEntity);
+    }
+
+    public NewsAdminDto buildReadAdminNewsInformation(NewsEntity newsEntity) {
+        return NewsAdminDto.builder()
+                .id(newsEntity.getId())
+                .titleArabic(newsEntity.getTitleArabic())
+                .titleEnglish(newsEntity.getTitleEnglish())
+                .descriptionArabic(newsEntity.getDescriptionArabic())
+                .descriptionEnglish(newsEntity.getDescriptionEnglish())
+                .publishDate(newsEntity.getPublishDate())
+                .imageUrl(newsEntity.getImageUrl())
+                .build();
+    }
+
 
     public NewsUserDto buildReadNewsInformation(NewsEntity newsEntity) {
         return NewsUserDto.builder()
@@ -112,6 +133,24 @@ public class NewsServiceImpl implements NewsService {
         NewsEntity saved = saveNews(existing);
         log.info("The Data Updated and Save in Data Base {}", saved);
         return mapToNewsDto(saved);
+    }
+
+    public void delete(Long newsId) {
+        newsRepository.deleteById(newsId);
+    }
+
+    @Override
+    public String deleteNews(Long newsId) {
+        checkIfNullOrEmpty(newsId);
+        NewsEntity newsEntity = this.findNewsById(newsId).orElseThrow();
+        delete(newsId);
+        return "Success Delete News";
+    }
+
+    private void checkIfNullOrEmpty(Long newsId) {
+        if (newsId == null) {
+            throw new RuntimeException();
+        }
     }
 
     @Override
